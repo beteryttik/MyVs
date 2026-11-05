@@ -35,12 +35,12 @@ public class PerformanceManager {
             mc.options.getFov().setValue((int) FeatureManager.num("fov"));
             mc.options.getViewDistance().setValue((int) FeatureManager.num("render_distance"));
             mc.options.getBiomeBlendRadius().setValue((int) FeatureManager.num("biome_blend"));
-            mc.options.getEntityDistanceScaling().setValue(FeatureManager.num("entity_distance"));
+            mc.options.getEntityDistanceScaling().setValue((double) FeatureManager.num("entity_distance"));
             mc.options.getMipmapLevels().setValue((int) FeatureManager.num("mipmaps"));
             if (FeatureManager.on("clouds_off")) mc.options.getCloudRenderMode().setValue(CloudRenderMode.OFF);
             if (FeatureManager.on("entity_shadows_off")) mc.options.getEntityShadows().setValue(false);
-            if (FeatureManager.on("darkness_flicker_off")) mc.options.getDarknessEffectScale().setValue(0.0f);
-            if (FeatureManager.on("dynamic_fov_off")) mc.options.getFovEffectScale().setValue(0.0f);
+            if (FeatureManager.on("darkness_flicker_off")) mc.options.getDarknessEffectScale().setValue(0.0d);
+            if (FeatureManager.on("dynamic_fov_off")) mc.options.getFovEffectScale().setValue(0.0d);
             String preset = FeatureManager.option("graphics_preset");
             for (GraphicsMode g : GraphicsMode.values()) {
                 if (g.name().equalsIgnoreCase(preset)) mc.options.getGraphicsMode().setValue(g);
