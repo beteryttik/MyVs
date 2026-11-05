@@ -1,0 +1,39 @@
+name: Build Moon Visual
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Забрать код
+        uses: actions/checkout@v4
+
+      - name: Установить JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Установить Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10'
+
+      - name: Сборка
+        run: gradle build --no-daemon
+
+      - name: Выложить jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: moonvisual
+          path: build/libs/*.jar
+
+      - name: Выложить логи при ошибке
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-reports
+          path: build/reports/
