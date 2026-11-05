@@ -74,7 +74,7 @@ public class ClickGuiScreen extends Screen {
     private void clickSound() {
         if (FeatureManager.on("gui_sounds")) {
             MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(
-                    SoundEvents.UI_BUTTON_CLICK, 1.0f, FeatureManager.num("click_sound_volume")));
+                    SoundEvents.UI_BUTTON_CLICK.value(), 1.0f, FeatureManager.num("click_sound_volume")));
         }
     }
 
