@@ -1,50 +1,196 @@
 package ru.moonvisual.core;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FeatureManager {
-    public static final LinkedHashMap<String, Feature> MAP = new LinkedHashMap<>();
+/** Реестр всех функций Moon Visual. Генерируется автоматически. */
+public final class Features {
+    public static final List<Feature> LIST = new ArrayList<>();
 
-    public static void registerAll() {
-        MAP.clear();
-        Features.init();
-        for (Feature f : Features.all()) {
-            MAP.put(f.id, f);
-        }
+    private Features() {}
+
+    private static void add(Feature f) {
+        LIST.add(f);
     }
 
-    public static void add(Feature f) {
-        MAP.put(f.id, f);
+    public static List<Feature> all() {
+        return LIST;
     }
 
-    public static Feature f(String id) {
-        return MAP.get(id);
-    }
-
-    public static boolean on(String id) {
-        Feature f = MAP.get(id);
-        return f != null && f.active();
-    }
-
-    public static float num(String id) {
-        Feature f = MAP.get(id);
-        return f == null ? 0f : f.value;
-    }
-
-    public static int color(String id) {
-        Feature f = MAP.get(id);
-        return f == null ? 0xFFFFFF : ((int) f.value) & 0xFFFFFF;
-    }
-
-    public static int opt(String id) {
-        Feature f = MAP.get(id);
-        if (f == null || f.options == null) return 0;
-        int i = (int) f.value;
-        return Math.max(0, Math.min(f.options.length - 1, i));
-    }
-
-    public static String option(String id) {
-        Feature f = MAP.get(id);
-        return f == null ? "?" : f.optionName(opt(id));
+    public static void init() {
+        add(new Feature("watermark", "Watermark", "Ватермарка", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("watermark_glow", "Watermark Glow", "Свечение ватермарки", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("watermark_style", "Watermark Style", "Стиль ватермарки", "HUD", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Classic", "Moon", "Minimal", "Text"}, true));
+        add(new Feature("fps", "FPS Counter", "Счётчик FPS", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("ping", "Ping", "Пинг", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("coords", "Coordinates", "Координаты", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("direction", "Direction", "Направление", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("biome", "Biome", "Биом", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("time", "World Time", "Время мира", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("clock_style", "Clock Style", "Стиль часов", "HUD", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Digital", "Moon"}, true));
+        add(new Feature("cps", "CPS Counter", "Счётчик CPS", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("server_ip", "Server IP", "IP сервера", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("memory", "Memory", "Оперативная память", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("tps", "TPS Estimate", "Оценка TPS", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("held_item_info", "Held Item Info", "Инфо о предмете", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("durability", "Item Durability", "Прочность предметов", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("armor_hud", "Armor HUD", "Броня на HUD", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("health_hud", "Health HUD", "Здоровье на HUD", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("hunger_hud", "Hunger HUD", "Голод на HUD", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("potions_hud", "Potion Effects", "Эффекты зелий", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("keystrokes", "Keystrokes", "Клавиши", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("keystrokes_style", "Keystrokes Style", "Стиль клавиш", "HUD", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Classic", "Modern", "Minimal"}, true));
+        add(new Feature("arraylist", "Arraylist", "Список функций", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("arraylist_pos", "Arraylist Position", "Позиция списка", "HUD", Feature.Type.SELECT, 1.00f, 0.00f, new String[]{"Top Left", "Top Right", "Bottom Left", "Bottom Right"}, true));
+        add(new Feature("scoreboard", "Scoreboard", "Скорборд", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("scoreboard_opacity", "Scoreboard Opacity", "Прозрачность скорборда", "HUD", Feature.Type.SLIDER, 0.30f, 1.00f, null, false));
+        add(new Feature("crosshair_style", "Crosshair Style", "Стиль прицела", "HUD", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Vanilla", "Dot", "Cross", "Circle", "Moon"}, true));
+        add(new Feature("crosshair_color", "Crosshair Color", "Цвет прицела", "HUD", Feature.Type.COLOR, 16777215.00f, 0.00f, null, true));
+        add(new Feature("crosshair_outline", "Crosshair Outline", "Обводка прицела", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("hit_crosshair", "Hit Crosshair", "Прицел при ударе", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("hit_color", "Hit Color", "Цвет попадания", "HUD", Feature.Type.COLOR, 16724821.00f, 0.00f, null, true));
+        add(new Feature("targethud", "Target HUD", "HUD цели", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("targethud_style", "Target HUD Style", "Стиль HUD цели", "HUD", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Moon", "Bar", "Minimal", "Panel"}, true));
+        add(new Feature("target_info", "Target Info", "Инфо о цели", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("damage_numbers", "Damage Numbers", "Числа урона", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("damage_number_style", "Damage Numbers Style", "Стиль чисел урона", "HUD", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Normal", "Rise", "Fade"}, true));
+        add(new Feature("hit_direction", "Hit Direction", "Индикатор урона", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("hud_scale", "HUD Scale", "Масштаб HUD", "HUD", Feature.Type.SLIDER, 1.00f, 2.00f, null, true));
+        add(new Feature("hud_shadow", "HUD Shadow", "Тень HUD", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("hud_accent", "HUD Accent", "Акцент HUD", "HUD", Feature.Type.COLOR, 8378879.00f, 0.00f, null, true));
+        add(new Feature("hud_offset_x", "HUD Offset X", "Смещение HUD X", "HUD", Feature.Type.SLIDER, 4.00f, 200.00f, null, true));
+        add(new Feature("hud_offset_y", "HUD Offset Y", "Смещение HUD Y", "HUD", Feature.Type.SLIDER, 4.00f, 200.00f, null, true));
+        add(new Feature("speed_hud", "Speed HUD", "Скорость на HUD", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("item_hud", "Item Card", "Карточка предмета", "HUD", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("low_hp_vignette", "Low HP Vignette", "Виньетка при низком HP", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("low_hp_threshold", "Low HP Threshold", "Порог низкого HP", "HUD", Feature.Type.SLIDER, 4.00f, 10.00f, null, true));
+        add(new Feature("damage_overlay_color", "Damage Overlay Color", "Цвет оверлея урона", "HUD", Feature.Type.COLOR, 16724821.00f, 0.00f, null, true));
+        add(new Feature("hit_particles", "Hit Particles", "Частицы удара", "Particles & Effects", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("hit_style", "Hit Style", "Стиль частиц удара", "Particles & Effects", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Spark", "Moonlight", "Blood", "Bloom", "Star", "Void", "Frost", "Ember", "Astral", "Sakura"}, true));
+        add(new Feature("crit_particles", "Crit Particles", "Частицы крита", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("crit_style", "Crit Style", "Стиль крита", "Particles & Effects", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Spark", "Moonlight", "Blood", "Bloom", "Star", "Void", "Frost", "Ember", "Astral", "Sakura"}, true));
+        add(new Feature("jump_circle", "Jump Circle", "Круг прыжка", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("jump_style", "Jump Style", "Стиль круга прыжка", "Particles & Effects", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Ring", "Moon", "Glow"}, true));
+        add(new Feature("kill_effect", "Kill Effect", "Эффект убийства", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("kill_style", "Kill Style", "Стиль убийства", "Particles & Effects", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Burst", "Implosion", "Wisp"}, true));
+        add(new Feature("totem_pop_fx", "Totem Pop FX", "Эффект тотема", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("totem_style", "Totem Style", "Стиль тотема", "Particles & Effects", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Confetti", "Moon", "Rings"}, false));
+        add(new Feature("death_effect", "Death Effect", "Эффект смерти", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("death_style", "Death Style", "Стиль смерти", "Particles & Effects", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Dissolve", "Shadow", "Petals"}, false));
+        add(new Feature("arrow_trail", "Arrow Trail", "След стрелы", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("pearl_trail", "Pearl Trail", "След эндер-жемчуга", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("potion_swirl", "Potion Swirl", "Вихрь зелья", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("sprint_trail", "Sprint Trail", "След при беге", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("step_particles", "Step Particles", "Частицы шагов", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("landing_particles", "Landing Particles", "Частицы приземления", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("elytra_trail", "Elytra Trail", "След элитр", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("moon_aura", "Moon Aura", "Лунная аура", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("aura_style", "Aura Style", "Стиль ауры", "Particles & Effects", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Moonlight", "Stars", "Mist"}, true));
+        add(new Feature("footstep_color", "Footstep Color", "Цвет шагов", "Particles & Effects", Feature.Type.COLOR, 8378879.00f, 0.00f, null, true));
+        add(new Feature("particle_density", "Particle Density", "Плотность частиц", "Particles & Effects", Feature.Type.SLIDER, 1.00f, 3.00f, null, true));
+        add(new Feature("hit_glow", "Hit Glow", "Свечение при ударе", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("glow_color", "Glow Color", "Цвет свечения", "Particles & Effects", Feature.Type.COLOR, 8378879.00f, 0.00f, null, true));
+        add(new Feature("hitmarker_sound", "Hitmarker Sound", "Звук попадания", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("hitmarker_volume", "Hitmarker Volume", "Громкость попадания", "Particles & Effects", Feature.Type.SLIDER, 0.50f, 1.00f, null, true));
+        add(new Feature("mining_fx", "Mining FX", "Эффект добычи", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("block_break_fx", "Block Break FX", "Эффект слома блока", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("place_fx", "Place FX", "Эффект установки блока", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("projectile_impact", "Projectile Impact", "Попадание снаряда", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("fall_damage_fx", "Fall Damage FX", "Эффект урона от падения", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("golden_trail", "Golden Trail", "Золотой след", "Particles & Effects", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("menu_animation", "Menu Animation", "Анимация меню", "Animations", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("menu_speed", "Menu Speed", "Скорость анимации меню", "Animations", Feature.Type.SLIDER, 1.00f, 3.00f, null, true));
+        add(new Feature("gui_blur", "GUI Blur", "Размытие под меню", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("gui_sounds", "GUI Sounds", "Звуки интерфейса", "Animations", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("toggle_animation", "Toggle Animation", "Анимация переключателей", "Animations", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("slider_animation", "Slider Animation", "Анимация слайдеров", "Animations", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("hover_animation", "Hover Animation", "Анимация наведения", "Animations", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("hotbar_animation", "Hotbar Animation", "Анимация хотбара", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("inventory_fade", "Inventory Fade", "Появление инвентаря", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("tab_animation", "Tab Animation", "Анимация Tab-списка", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("chat_animation", "Chat Animation", "Анимация чата", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("chat_fade", "Chat Fade Speed", "Скорость исчезновения чата", "Animations", Feature.Type.SLIDER, 1.00f, 3.00f, null, false));
+        add(new Feature("item_switch_animation", "Item Switch Animation", "Смена предмета", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("pickup_animation", "Pickup Animation", "Анимация подбора", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("damage_tilt_off", "Damage Tilt Off", "Отключить наклон при уроне", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("hurt_cam_off", "Hurt Cam Off", "Отключить Hurt Cam", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("camera_shake_off", "Camera Shake Off", "Отключить тряску камеры", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("explosion_shake_off", "Explosion Shake Off", "Отключить тряску от взрывов", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("dynamic_fov_off", "Dynamic FOV Off", "Отключить динамический FOV", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("walk_bob_off", "Walk Bobbing Off", "Отключить покачивание при ходьбе", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("view_bob_slider", "View Bobbing Intensity", "Сила покачивания", "Animations", Feature.Type.SLIDER, 1.00f, 2.00f, null, false));
+        add(new Feature("swing_speed_slider", "Swing Speed", "Скорость взмаха руки", "Animations", Feature.Type.SLIDER, 1.00f, 2.00f, null, false));
+        add(new Feature("eat_anim_slider", "Eat Animation", "Анимация еды", "Animations", Feature.Type.SLIDER, 1.00f, 2.00f, null, false));
+        add(new Feature("bow_anim_slider", "Bow Animation", "Анимация лука", "Animations", Feature.Type.SLIDER, 1.00f, 2.00f, null, false));
+        add(new Feature("totem_anim_off", "Totem Animation Off", "Отключить анимацию тотема", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("equip_anim_slider", "Equip Animation", "Анимация экипировки", "Animations", Feature.Type.SLIDER, 1.00f, 2.00f, null, false));
+        add(new Feature("death_anim_off", "Death Animation Off", "Отключить анимацию смерти", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("parallax_gui", "GUI Parallax", "Параллакс в меню", "Animations", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("fov", "FOV", "Угол обзора", "Camera", Feature.Type.SLIDER, 70.00f, 110.00f, null, true));
+        add(new Feature("sprint_fov", "Sprint FOV", "FOV при беге", "Camera", Feature.Type.SLIDER, 1.00f, 2.00f, null, true));
+        add(new Feature("zoom", "Zoom", "Зум (клавиша C)", "Camera", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("zoom_factor", "Zoom Factor", "Сила зума", "Camera", Feature.Type.SLIDER, 3.00f, 10.00f, null, true));
+        add(new Feature("zoom_smooth", "Zoom Smoothing", "Плавность зума", "Camera", Feature.Type.SLIDER, 0.50f, 1.00f, null, true));
+        add(new Feature("smooth_camera", "Smooth Camera", "Плавная камера", "Camera", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("cinematic_camera", "Cinematic Camera", "Кинематографичная камера", "Camera", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("smooth_third_person", "Smooth Third Person", "Плавное 3-е лицо", "Camera", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("max_fps", "Max FPS", "Максимальный FPS", "Performance", Feature.Type.SLIDER, 260.00f, 360.00f, null, true));
+        add(new Feature("background_fps", "Background FPS", "FPS в фоне", "Performance", Feature.Type.SLIDER, 30.00f, 60.00f, null, true));
+        add(new Feature("clouds_off", "Disable Clouds", "Отключить облака", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("rain_off", "Reduce Rain", "Уменьшить дождь", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("entity_shadows_off", "Disable Entity Shadows", "Отключить тени мобов", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("fog_off", "Disable Fog", "Отключить туман", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("vignette_off", "Disable Vignette", "Отключить виньетку", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("dirt_screen_off", "Disable Dirt Screen", "Отключить экран загрузки", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("water_overlay_off", "Disable Water Overlay", "Отключить оверлей воды", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("portal_overlay_off", "Disable Portal Overlay", "Отключить оверлей портала", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("darkness_flicker_off", "Darkness Flicker Off", "Отключить пульсацию Darkness", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("particle_cap", "Particle Amount", "Количество частиц", "Performance", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Minimal", "Decreased", "All"}, true));
+        add(new Feature("biome_blend", "Biome Blend", "Смешивание биомов", "Performance", Feature.Type.SLIDER, 2.00f, 7.00f, null, true));
+        add(new Feature("entity_distance", "Entity Distance", "Дистанция рендера сущностей", "Performance", Feature.Type.SLIDER, 1.00f, 4.00f, null, true));
+        add(new Feature("mipmaps", "Mipmaps", "Мипмапы", "Performance", Feature.Type.SLIDER, 4.00f, 4.00f, null, true));
+        add(new Feature("graphics_preset", "Graphics Preset", "Пресет графики", "Performance", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Fast", "Fancy", "Fabulous"}, true));
+        add(new Feature("memory_cleanup", "Memory Cleanup", "Очистка памяти", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("cull_particles", "Particle Culling", "Отсечение частиц", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("adaptive_quality", "Adaptive Quality", "Адаптивное качество", "Performance", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("render_distance", "Render Distance", "Прорисовка", "Performance", Feature.Type.SLIDER, 12.00f, 32.00f, null, true));
+        add(new Feature("theme", "Theme", "Тема", "Interface", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Moonlight", "Dark", "Light", "Bloodmoon", "Sakura", "Neon", "Midnight"}, true));
+        add(new Feature("language", "Language", "Язык", "Interface", Feature.Type.SELECT, 1.00f, 0.00f, new String[]{"English", "Русский"}, true));
+        add(new Feature("gui_scale", "GUI Scale", "Масштаб GUI", "Interface", Feature.Type.SLIDER, 1.00f, 1.50f, null, true));
+        add(new Feature("search_in_gui", "Search in GUI", "Поиск в меню", "Interface", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("tooltips", "Tooltips", "Подсказки", "Interface", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("rainbow_accent", "Rainbow Accent", "Радужный акцент", "Interface", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("rounded_corners", "Rounded Corners", "Скруглённые углы", "Interface", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("hud_text_shadow", "HUD Text Shadow", "Тень текста HUD", "Interface", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("accent_color", "GUI Accent", "Акцент GUI", "Interface", Feature.Type.COLOR, 8378879.00f, 0.00f, null, true));
+        add(new Feature("click_sound_volume", "Click Volume", "Громкость кликов", "Interface", Feature.Type.SLIDER, 0.70f, 1.00f, null, true));
+        add(new Feature("gui_opacity", "GUI Opacity", "Плотность GUI", "Interface", Feature.Type.SLIDER, 0.85f, 1.00f, null, true));
+        add(new Feature("startup_screen", "Startup Screen", "Экран запуска", "Interface", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("update_checker", "Update Checker", "Проверка обновлений", "Interface", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("first_run_wizard", "First Run Wizard", "Мастер первого запуска", "Interface", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("custom_sky_color", "Custom Sky Color", "Свой цвет неба", "Sky & World", Feature.Type.COLOR, 8378879.00f, 0.00f, null, false));
+        add(new Feature("sky_gradient", "Sky Gradient", "Градиент неба", "Sky & World", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("bloodmoon_sky", "Bloodmoon Sky", "Кровавая луна", "Sky & World", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("sunset_color", "Sunset Color", "Цвет заката", "Sky & World", Feature.Type.COLOR, 16746564.00f, 0.00f, null, false));
+        add(new Feature("stars_density", "Stars Density", "Плотность звёзд", "Sky & World", Feature.Type.SLIDER, 1.00f, 3.00f, null, false));
+        add(new Feature("moon_style", "Moon Style", "Стиль луны", "Sky & World", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Vanilla", "Moon Visual", "Pixel", "Blood"}, false));
+        add(new Feature("fog_color", "Fog Color", "Цвет тумана", "Sky & World", Feature.Type.COLOR, 16777215.00f, 0.00f, null, false));
+        add(new Feature("cloud_color", "Cloud Color", "Цвет облаков", "Sky & World", Feature.Type.COLOR, 16777215.00f, 0.00f, null, false));
+        add(new Feature("biome_tint", "Biome Tint", "Оттенок биомов", "Sky & World", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("water_tint", "Water Tint", "Оттенок воды", "Sky & World", Feature.Type.COLOR, 4159204.00f, 0.00f, null, false));
+        add(new Feature("moon_trail", "Moon Trail", "Лунный след", "Cosmetic", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("trail_style", "Trail Style", "Стиль следа", "Cosmetic", Feature.Type.SELECT, 0.00f, 0.00f, new String[]{"Moon", "Sparkle", "Flame", "Mist"}, true));
+        add(new Feature("moon_glow", "Moon Glow", "Лунное свечение", "Cosmetic", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("lunar_flame", "Lunar Flame", "Лунное пламя", "Cosmetic", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("pet_cosmetic", "Pet Cosmetic", "Питомец", "Cosmetic", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("cape_visual", "Cape Visual", "Плащ", "Cosmetic", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("hat_cosmetic", "Hat Cosmetic", "Шляпа", "Cosmetic", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("wings_visual", "Wings Visual", "Крылья", "Cosmetic", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("auto_save", "Auto Save Config", "Автосохранение настроек", "General", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
+        add(new Feature("debug_mode", "Debug Mode", "Режим отладки", "General", Feature.Type.TOGGLE, 0.00f, 1.00f, null, true));
+        add(new Feature("menu_key_hint", "Menu Key Hint", "Подсказка о клавише меню", "General", Feature.Type.TOGGLE, 1.00f, 1.00f, null, false));
+        add(new Feature("tutorial", "Tutorial", "Обучение", "General", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("changelog", "Changelog", "Список изменений", "General", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
+        add(new Feature("credits", "Credits", "Авторы", "General", Feature.Type.TOGGLE, 0.00f, 1.00f, null, false));
     }
 }
