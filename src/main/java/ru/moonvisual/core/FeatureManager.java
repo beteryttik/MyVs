@@ -8,6 +8,9 @@ public class FeatureManager {
     public static void registerAll() {
         MAP.clear();
         Features.init();
+        for (Feature f : Features.all()) {
+            MAP.put(f.id, f);
+        }
     }
 
     public static void add(Feature f) {
