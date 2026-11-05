@@ -1,9 +1,22 @@
 package ru.moonvisual.core;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Реестр всех функций Moon Visual. Генерируется автоматически. */
 public final class Features {
+    public static final List<Feature> LIST = new ArrayList<>();
+
+    private Features() {}
+
+    private static void add(Feature f) {
+        LIST.add(f);
+    }
+
+    public static List<Feature> all() {
+        return LIST;
+    }
+
     public static void init() {
         add(new Feature("watermark", "Watermark", "Ватермарка", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
         add(new Feature("watermark_glow", "Watermark Glow", "Свечение ватермарки", "HUD", Feature.Type.TOGGLE, 1.00f, 1.00f, null, true));
