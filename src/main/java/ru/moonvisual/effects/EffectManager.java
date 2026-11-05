@@ -3,6 +3,7 @@ package ru.moonvisual.effects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -51,7 +52,7 @@ public class EffectManager {
                         target.getX() + r(0.5), target.getEyeY() + r(0.5), target.getZ() + r(0.5), 0, 0.05, 0);
             }
         }
-        if (target.isDead() && FeatureManager.on("kill_effect")) {
+        if (target instanceof LivingEntity le && le.isDead() && FeatureManager.on("kill_effect")) {
             String ks = FeatureManager.option("kill_style");
             for (int i = 0; i < 40; i++) {
                 if (ks.equals("Burst")) {
@@ -68,7 +69,7 @@ public class EffectManager {
         }
         if (FeatureManager.on("hitmarker_sound")) {
             MinecraftClient mc = MinecraftClient.getInstance();
-            mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK,
+            mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK.value(),
                     1.6f, FeatureManager.num("hitmarker_volume")));
         }
     }
