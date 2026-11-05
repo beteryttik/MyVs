@@ -12,8 +12,8 @@ import ru.moonvisual.effects.EffectManager;
 public class FovMixin {
     @Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
     private void moonvisual$fov(Camera camera, float tickDelta, boolean changingFov,
-                                CallbackInfoReturnable<Float> cir) {
-        float f = EffectManager.fovModifier(cir.getReturnValueF());
-        cir.setReturnValue(f);
+                                CallbackInfoReturnable<Double> cir) {
+        float f = EffectManager.fovModifier((float) cir.getReturnValueD());
+        cir.setReturnValue((double) f);
     }
 }
