@@ -239,13 +239,13 @@ public class HudManager {
 
     private static void drawKeystrokes(DrawContext ctx, MinecraftClient mc) {
         if (!FeatureManager.on("keystrokes")) return;
-        int handle = mc.getWindow().getHandle();
+        long handle = mc.getWindow().getHandle();
         var th = ThemeManager.current();
         boolean[] pressed = {
-                org.lwjgl.glfw.GLFW.GLFW_KEY_W == key(handle, org.lwjgl.glfw.GLFW.GLFW_KEY_W),
-                org.lwjgl.glfw.GLFW.GLFW_KEY_A == key(handle, org.lwjgl.glfw.GLFW.GLFW_KEY_A),
-                org.lwjgl.glfw.GLFW.GLFW_KEY_S == key(handle, org.lwjgl.glfw.GLFW.GLFW_KEY_S),
-                org.lwjgl.glfw.GLFW.GLFW_KEY_D == key(handle, org.lwjgl.glfw.GLFW.GLFW_KEY_D),
+                key(handle, org.lwjgl.glfw.GLFW.GLFW_KEY_W),
+                key(handle, org.lwjgl.glfw.GLFW.GLFW_KEY_A),
+                key(handle, org.lwjgl.glfw.GLFW.GLFW_KEY_S),
+                key(handle, org.lwjgl.glfw.GLFW.GLFW_KEY_D),
                 mc.mouse.wasLeftButtonClicked(),
                 mc.mouse.wasRightButtonClicked()
         };
@@ -266,8 +266,8 @@ public class HudManager {
         }
     }
 
-    private static boolean key(int handle, int code) {
-        return com.mojang.blaze3d.platform.InputUtil.isKeyPressed(handle, code);
+    private static boolean key(long handle, int code) {
+        return net.minecraft.client.util.InputUtil.isKeyPressed(handle, code);
     }
 
     private static void drawArraylist(DrawContext ctx, MinecraftClient mc) {
