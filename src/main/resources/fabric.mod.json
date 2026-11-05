@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "moonvisual",
+  "version": "${version}",
+  "name": "Moon Visual",
+  "description": "Visual-only client mod: HUD, particles, animations, FPS optimizer, themes and languages. No gameplay changes.",
+  "authors": ["Moon Visual Team"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/moonvisual/textures/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["ru.moonvisual.MoonVisualClient"]
+  },
+  "mixins": ["moonvisual.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "minecraft": "~1.21.1",
+    "java": ">=21"
+  }
+}
